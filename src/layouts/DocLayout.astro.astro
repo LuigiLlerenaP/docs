@@ -8,9 +8,9 @@ interface Props {
 }
 
 const { title = "Documentación" } = Astro.props;
+
 const currentPath = Astro.url.pathname;
 
-// 2. Definimos la data del menú (esto luego podrías sacarlo de un JSON o CMS si quisieras)
 const menuSections = [
   {
     category: "General",
@@ -21,13 +21,11 @@ const menuSections = [
   },
   {
     category: "Desarrollo SQL",
-    links: [
-      { href: "/sql/queries", label: "Optimización de Queries" },
-      { href: "/sql/sp", label: "Stored Procedures" },
-      { href: "/sql/indices", label: "Gestión de Índices" },
-    ],
+    links: [{ href: "/sql/queries", label: "Optimización de Queries" }],
   },
 ];
+
+const titlePage: string = `${currentPath.split("/")[1]?.toUpperCase()}-${title}`;
 ---
 
 <!doctype html>
@@ -44,13 +42,13 @@ const menuSections = [
   >
     <div class="flex min-h-screen w-full">
       <DocSidebar
-        title={title}
+        title="Documentación"
         menuSections={menuSections}
         currentPath={currentPath}
       />
 
       <div class="flex-1 flex flex-col min-w-0 lg:pl-72">
-        <DocTopBar title={title} />
+        <DocTopBar title={titlePage} />
 
         <main class="flex-1 px-6 py-10 lg:px-12 lg:py-16">
           <div class="mx-auto max-w-4xl w-full">
