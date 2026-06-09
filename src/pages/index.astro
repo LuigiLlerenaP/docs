@@ -1,11 +1,50 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import DocumentationCard from "../components/landing/DocumentationCard.astro";
+import Presentacion from "../components/landing/Presentacion.astro";
+import SectionHeader from "../components/landing/SectionHeader.astro";
+import LandingLayout from "../layouts/LandingLayout.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 1. Centralizamos los datos en un arreglo
+const tarjetas = [
+  {
+    title: "SQL Server",
+    href: "/sql",
+    description:
+      "Convenciones, procedimientos almacenados, índices, transacciones y estándares para el desarrollo de bases de datos.",
+  },
+
+  //   {
+  //     title: "Procesos ETL",
+  //     href: "/etl",
+  //     description: "Guías de flujos de integración, manejo de errores y lookups.",
+  //   },
+];
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<LandingLayout title="Portal de Documentación">
+  <section class="mx-auto w-full max-w-7xl px-8">
+    <Presentacion />
+
+    <SectionHeader
+      title="Biblioteca de documentación"
+      description="Explora las distintas áreas de conocimiento y accede a la documentación técnica de cada proyecto, tecnología o proceso."
+    />
+
+    <div
+      class:list={[
+        "mt-8 grid grid-cols-1 gap-4",
+        tarjetas.length > 1 ? "sm:grid-cols-2" : "",
+      ]}
+    >
+      {
+        tarjetas.map((tarjeta) => (
+          <DocumentationCard
+            title={tarjeta.title}
+            href={tarjeta.href}
+            description={tarjeta.description}
+          />
+        ))
+      }
+    </div>
+  </section>
+</LandingLayout>

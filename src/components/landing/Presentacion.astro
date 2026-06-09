@@ -1,0 +1,54 @@
+---
+interface Props {
+  titulo?: string;
+  textoResaltado?: string;
+  descripcion?: string;
+  badge?: string;
+}
+
+const {
+  titulo = "Documentación Técnica",
+  textoResaltado = "Desarrollo",
+  descripcion = "Estándares de desarrollo y buenas prácticas del equipo de base de datos.",
+  badge = "Estándares internos · 2026",
+} = Astro.props;
+---
+
+<div class="mx-auto mb-20 mt-10 max-w-5xl px-6 text-center">
+  <!-- Badge -->
+  <div class="mb-10 flex justify-center">
+    <div class="flex items-center gap-4">
+      <div class="h-px w-8 bg-emerald-600/80"></div>
+
+      <span
+        class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
+      >
+        {badge}
+      </span>
+
+      <div class="h-px w-8 bg-emerald-600/80"></div>
+    </div>
+  </div>
+
+  <!-- Título -->
+  <h1
+    class="mx-auto max-w-4xl text-5xl font-black leading-[1.03] tracking-tight text-slate-900 md:text-6xl lg:text-7xl"
+  >
+    {titulo}
+
+    <br />
+
+    <span
+      class="bg-linear-to-r from-emerald-700 via-emerald-600 to-emerald-700 bg-clip-text text-transparent"
+    >
+      {textoResaltado}
+    </span>
+  </h1>
+
+  <!-- Descripción -->
+  <p
+    class="mx-auto mt-10 max-w-184 text-lg leading-[1.85] tracking-[0.01em] text-slate-500 md:text-[1.22rem]"
+  >
+    {descripcion}
+  </p>
+</div>

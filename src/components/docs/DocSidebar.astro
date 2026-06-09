@@ -1,0 +1,196 @@
+---
+interface Link {
+  href: string;
+  label: string;
+}
+
+interface MenuSection {
+  category: string;
+  links: Link[];
+}
+
+interface Props {
+  title?: string;
+  menuSections: MenuSection[];
+  currentPath: string;
+}
+
+const { menuSections = [], currentPath, title = "SQL Docs" } = Astro.props;
+---
+
+<aside
+  id="mobile-sidebar"
+  class="fixed inset-y-0 left-0 z-50
+         w-[85vw] max-w-[320px] sm:w-80
+         border-r border-slate-100
+         bg-white
+         flex flex-col
+         transform -translate-x-full
+         lg:translate-x-0
+         transition-transform duration-300 ease-out
+         shadow-2xl lg:shadow-none"
+>
+  <div
+    class="h-14 sm:h-16 flex items-center justify-between px-5 sm:px-6 border-b border-slate-100 shrink-0"
+  >
+    <a
+      href="/"
+      class="flex items-center gap-3 transition-opacity hover:opacity-80"
+    >
+      <div
+        class="flex h-7 w-7 items-center justify-center rounded-lg border border-emerald-900/10 bg-white shadow-sm"
+      >
+        <svg
+          class="h-4 w-4 text-emerald-900"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"
+          ></path>
+        </svg>
+      </div>
+
+      <span
+        class="text-base sm:text-lg font-bold tracking-tight text-slate-900"
+      >
+        {title.replace("Docs", "")}<span class="text-emerald-900 font-medium"
+          >Docs</span
+        >
+      </span>
+    </a>
+
+    <button
+      id="close-sidebar"
+      class="lg:hidden inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white text-slate-400 transition-all hover:bg-emerald-50 hover:text-emerald-900 active:scale-95"
+      aria-label="Cerrar menú"
+    >
+      <svg
+        class="h-5 w-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="px-4 sm:px-5 py-4 shrink-0">
+    <button
+      class="group flex w-full items-center justify-between rounded-xl border border-slate-100 bg-white px-3 py-2.5 text-sm transition-all hover:border-emerald-900/20 hover:shadow-sm"
+    >
+      <div class="flex items-center gap-2.5">
+        <svg
+          class="h-4 w-4 text-slate-400 transition-colors group-hover:text-emerald-900"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+
+        <span class="font-medium text-slate-400 group-hover:text-slate-600">
+          Buscar documentación...
+        </span>
+      </div>
+
+      <kbd
+        class="hidden sm:inline-flex items-center rounded-md border border-slate-100 bg-slate-50 px-1.5 py-0.5 text-[10px] font-semibold text-slate-400"
+      >
+        ⌘K
+      </kbd>
+    </button>
+  </div>
+
+  <nav
+    class="relative flex-1 overflow-y-auto px-3 sm:px-4 pb-20 custom-scrollbar"
+  >
+    <div
+      class="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-white to-transparent z-10"
+    >
+    </div>
+
+    {
+      menuSections.map((section) => (
+        <section class="mb-6 mt-2">
+          <h4 class="mb-2 px-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+            {section.category}
+          </h4>
+
+          <ul class="space-y-0.5">
+            {section.links.map((link) => {
+              const isActive =
+                currentPath === link.href || currentPath === `${link.href}/`;
+
+              return (
+                <li>
+                  <a
+                    href={link.href}
+                    aria-current={isActive ? "page" : undefined}
+                    class:list={[
+                      "flex items-center rounded-xl px-3.5 py-2.5 text-sm transition-all duration-200",
+                      isActive
+                        ? "bg-emerald-50/50 text-emerald-900 font-semibold"
+                        : "text-slate-500 font-medium hover:bg-slate-50 hover:text-slate-900",
+                    ]}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    }
+
+    <div
+      class="pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t from-white to-transparent"
+    >
+    </div>
+  </nav>
+</aside>
+
+<div
+  id="sidebar-overlay"
+  class="fixed inset-0 z-40 hidden bg-slate-900/10 backdrop-blur-[1px] opacity-0 transition-all duration-300 lg:hidden"
+>
+</div>
+
+<script>
+  const sidebar = document.getElementById("mobile-sidebar");
+  const closeBtn = document.getElementById("close-sidebar");
+  const overlay = document.getElementById("sidebar-overlay");
+
+  // Reemplaza '.btn-abrir-menu' por la clase que tenga el botón de menú de tu barra superior
+  const openButtons = document.querySelectorAll(".btn-abrir-menu");
+
+  function closeSidebar() {
+    sidebar?.classList.add("-translate-x-full");
+    overlay?.classList.add("opacity-0");
+    setTimeout(() => overlay?.classList.add("hidden"), 300);
+  }
+
+  function openSidebar() {
+    sidebar?.classList.remove("-translate-x-full");
+    overlay?.classList.remove("hidden");
+    setTimeout(() => overlay?.classList.remove("opacity-0"), 10);
+  }
+
+  closeBtn?.addEventListener("click", closeSidebar);
+  overlay?.addEventListener("click", closeSidebar);
+  openButtons.forEach((btn) => btn.addEventListener("click", openSidebar));
+</script>

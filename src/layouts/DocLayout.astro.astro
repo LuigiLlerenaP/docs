@@ -1,0 +1,70 @@
+---
+import DocSidebar from "../components/docs/DocSidebar.astro";
+import DocTopBar from "../components/docs/DocTopBar.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Documentación" } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+// 2. Definimos la data del menú (esto luego podrías sacarlo de un JSON o CMS si quisieras)
+const menuSections = [
+  {
+    category: "General",
+    links: [
+      { href: "/sql", label: "Introducción" },
+      { href: "/sql/convenciones", label: "Convenciones" },
+    ],
+  },
+  {
+    category: "Desarrollo SQL",
+    links: [
+      { href: "/sql/queries", label: "Optimización de Queries" },
+      { href: "/sql/sp", label: "Stored Procedures" },
+      { href: "/sql/indices", label: "Gestión de Índices" },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} — Portal de Datos</title>
+  </head>
+
+  <body
+    class="bg-white text-slate-700 antialiased selection:bg-emerald-800 selection:text-white"
+  >
+    <div class="flex min-h-screen w-full">
+      <DocSidebar
+        title={title}
+        menuSections={menuSections}
+        currentPath={currentPath}
+      />
+
+      <div class="flex-1 flex flex-col min-w-0 lg:pl-72">
+        <DocTopBar title={title} />
+
+        <main class="flex-1 px-6 py-10 lg:px-12 lg:py-16">
+          <div class="mx-auto max-w-4xl w-full">
+            <slot />
+          </div>
+        </main>
+
+        <footer
+          class="mt-auto px-6 py-8 lg:px-12 border-t border-slate-100 text-slate-400 text-xs flex flex-col sm:flex-row justify-between items-center gap-4"
+        >
+          <p>© {new Date().getFullYear()} - Estándares Internos</p>
+          <p>Documentación técnica</p>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

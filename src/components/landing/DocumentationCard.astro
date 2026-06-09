@@ -1,0 +1,85 @@
+---
+interface Props {
+  href?: string;
+  title?: string;
+  description?: string;
+  articles?: string | number;
+  updated?: string;
+}
+
+const {
+  href = "#",
+  title = "Título de la sección",
+  description = "Descripción de lo que contiene esta parte de la documentación.",
+  articles = 0,
+  updated = "Recientemente",
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class="group relative block overflow-hidden rounded-2xl border border-slate-200 bg-white p-8 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-800/30 hover:shadow-[0_14px_35px_rgba(15,23,42,0.05)] focus:outline-none focus:ring-2 focus:ring-emerald-800 focus:ring-offset-2"
+>
+  <div
+    class="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-linear-to-r from-emerald-600 to-emerald-900 transition-transform duration-500 ease-out group-hover:scale-x-100"
+  >
+  </div>
+
+  <div class="flex items-start justify-between gap-8">
+    <div class="min-w-0 flex-1">
+      <h3
+        class="text-xl font-bold tracking-tight text-slate-800 transition-colors duration-300 group-hover:text-emerald-900"
+      >
+        {title}
+      </h3>
+
+      <p class="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-slate-500">
+        {description}
+      </p>
+
+      <div
+        class="mt-6 flex flex-wrap items-center gap-4 text-sm text-slate-500"
+      >
+        <span
+          class="flex items-center gap-1.5 rounded-md border border-slate-100 bg-slate-50 px-2.5 py-1 font-medium transition-colors duration-300 group-hover:border-emerald-100 group-hover:bg-emerald-50 group-hover:text-emerald-800"
+        >
+          <svg
+            class="h-4 w-4 text-emerald-600/70"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 11H5m14 0V9a2 2 0 00-2-2H7a2 2 0 00-2 2v2m14 0v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8"
+            ></path>
+          </svg>
+          {articles} artículos
+        </span>
+
+        <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+
+        <span class="font-medium group-hover:text-slate-600 transition-colors">
+          Actualizado: {updated}
+        </span>
+      </div>
+    </div>
+
+    <div
+      class="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-100 bg-slate-50 transition-all duration-300 group-hover:border-emerald-800 group-hover:bg-emerald-800 group-hover:shadow-md"
+    >
+      <svg
+        class="h-5 w-5 text-slate-400 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</a>
