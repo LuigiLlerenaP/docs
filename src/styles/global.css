@@ -1,19 +1,25 @@
 @import "tailwindcss";
 
-@layer components {
-    .prose h1 {
-        @apply text-4xl font-bold text-slate-900 mb-6 tracking-tight;
-    }
+:root {
+    --sl-font: 'IBM Plex Serif', serif;
+}
 
-    .prose h2 {
-        @apply text-2xl font-bold text-emerald-900 mt-12 mb-4;
-    }
+body {
+    font-family: var(--sl-font);
+}
 
-    .prose p {
-        @apply text-slate-600 leading-relaxed mb-6;
-    }
+.prose h1 {
+    @apply text-4xl font-bold text-slate-900 mb-6 tracking-tight;
+}
 
-    .prose code {
-        @apply bg-slate-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono text-sm;
-    }
+.prose h2 {
+    @apply text-2xl font-bold text-emerald-900 mt-12 mb-4;
+}
+
+.prose p {
+    @apply text-slate-600 leading-relaxed mb-6;
+}
+
+.prose code {
+    @apply bg-slate-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono text-sm;
 }

@@ -14,25 +14,25 @@ const {
 } = Astro.props;
 ---
 
-<div class="mx-auto mb-20 mt-10 max-w-5xl px-6 text-center">
+<div
+  class="mx-auto mt-16 mb-14 flex w-full max-w-4xl flex-col items-center px-6 text-center"
+>
   <!-- Badge -->
-  <div class="mb-10 flex justify-center">
-    <div class="flex items-center gap-4">
-      <div class="h-px w-8 bg-emerald-600/80"></div>
+  <div class="mb-10 flex items-center gap-4">
+    <div class="h-px w-8 bg-emerald-600/80"></div>
 
-      <span
-        class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
-      >
-        {badge}
-      </span>
+    <span
+      class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500"
+    >
+      {badge}
+    </span>
 
-      <div class="h-px w-8 bg-emerald-600/80"></div>
-    </div>
+    <div class="h-px w-8 bg-emerald-600/80"></div>
   </div>
 
   <!-- Título -->
   <h1
-    class="mx-auto max-w-4xl text-5xl font-black leading-[1.03] tracking-tight text-slate-900 md:text-6xl lg:text-7xl"
+    class="text-5xl font-black leading-[1.03] tracking-tight text-slate-900 md:text-6xl lg:text-7xl"
   >
     {titulo}
 
@@ -47,7 +47,7 @@ const {
 
   <!-- Descripción -->
   <p
-    class="mx-auto mt-10 max-w-184 text-lg leading-[1.85] tracking-[0.01em] text-slate-500 md:text-[1.22rem]"
+    class="mt-12 max-w-3xl text-lg leading-[1.85] tracking-[0.01em] text-slate-500 md:text-[1.22rem]"
   >
     {descripcion}
   </p>

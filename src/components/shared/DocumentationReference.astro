@@ -1,0 +1,21 @@
+---
+interface Props {
+  href: string;
+  title: string;
+}
+
+const { href, title } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group relative inline-flex py-1 text-sm font-medium tracking-[0.01em] text-slate-500 transition-colors duration-300 hover:text-slate-700"
+>
+  <span>{title}</span>
+
+  <span
+    class="absolute -bottom-0.5 left-0 h-px w-full origin-center scale-x-0 bg-linear-to-r from-transparent via-emerald-700 to-transparent transition-transform duration-300 ease-out group-hover:scale-x-100"
+  ></span>
+</a>

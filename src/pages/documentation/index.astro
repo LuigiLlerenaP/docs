@@ -1,0 +1,112 @@
+---
+import DocumentationCard from "../../components/landing/DocumentationCard.astro";
+import SectionHeader from "../../components/landing/SectionHeader.astro";
+import type { Link } from "../../interfaces/DocsInterfaces";
+
+import DocumentationLayout from "../../layouts/DocumentationLayout.astro";
+
+const documentations: Link[] = [
+  {
+    title: "SQL Server",
+    href: "/documentation/db",
+    category: "Base de datos",
+    articles: 24,
+    description:
+      "Convenciones, procedimientos almacenados, índices, transacciones y estándares para SQL Server.",
+  },
+  {
+    title: "Procesos ETL",
+    href: "/documentation/etl",
+    category: "Integración",
+    articles: 12,
+    description:
+      "Guías para flujos de integración, paquetes SSIS, lookups y manejo de errores.",
+  },
+];
+---
+
+<DocumentationLayout title="Biblioteca de documentación">
+  <!-- Navegación -->
+  <div class="mx-auto flex w-full max-w-5xl items-center justify-between">
+    <a
+      href="/"
+      class="group inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition-colors duration-300 hover:text-emerald-800"
+    >
+      <svg
+        class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"
+        ></path>
+      </svg>
+
+      Volver al portal
+    </a>
+
+    <span class="text-sm text-slate-400">
+      {documentations.length} documentaciones
+    </span>
+  </div>
+
+  <!-- Cabecera -->
+  <div class="mt-10">
+    <SectionHeader
+      title="Biblioteca de documentación"
+      description="Explora las distintas áreas de conocimiento disponibles. Cada documentación reúne estándares, convenciones, ejemplos y buenas prácticas utilizadas por el equipo."
+    />
+  </div>
+
+  <!-- Categorías -->
+  <div class="mx-auto mt-10 flex max-w-5xl flex-wrap justify-center gap-3">
+    <button
+      class="rounded-full border border-emerald-700 bg-emerald-700 px-4 py-2 text-sm font-medium text-white transition-colors duration-300"
+    >
+      Todas
+    </button>
+
+    <button
+      class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-all duration-300 hover:border-emerald-700 hover:text-emerald-800"
+    >
+      Base de datos
+    </button>
+
+    <button
+      class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-all duration-300 hover:border-emerald-700 hover:text-emerald-800"
+    >
+      Integración
+    </button>
+
+    <button
+      class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-all duration-300 hover:border-emerald-700 hover:text-emerald-800"
+    >
+      Backend
+    </button>
+
+    <button
+      class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-all duration-300 hover:border-emerald-700 hover:text-emerald-800"
+    >
+      Frontend
+    </button>
+  </div>
+
+  <!-- Separador -->
+  <div class="mx-auto mt-10 h-px w-full max-w-5xl bg-slate-100"></div>
+
+  <!-- Cards -->
+  <div class="mx-auto mt-10 grid w-full max-w-5xl gap-6 md:grid-cols-2">
+    {
+      documentations.map((documentation) => (
+        <DocumentationCard
+          href={documentation.href}
+          title={documentation.title}
+          description={documentation.description}
+          articles={documentation.articles}
+          updated="Recientemente"
+        />
+      ))
+    }
+  </div>
+</DocumentationLayout>

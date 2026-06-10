@@ -1,0 +1,76 @@
+---
+import type { Link } from "../../interfaces/DocsInterfaces";
+import DocumentationReference from "../shared/DocumentationReference.astro";
+import SeparatorLine from "../shared/SeparatorLine.astro";
+
+const references: Link[] = [
+  {
+    title: "SQL Server",
+    href: "https://learn.microsoft.com/sql/sql-server/",
+  },
+  {
+    title: "Transact-SQL",
+    href: "https://learn.microsoft.com/sql/t-sql/",
+  },
+  {
+    title: "CREATE PROCEDURE",
+    href: "https://learn.microsoft.com/sql/t-sql/statements/create-procedure-transact-sql",
+  },
+];
+---
+
+<footer class="mt-15 pb-20">
+  <SeparatorLine title="Referencias" />
+
+  <div class="mx-auto mt-12 max-w-3xl px-5 text-center sm:px-6 lg:px-0">
+    <!-- Título -->
+    <h2 class="text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
+      Fuentes consultadas
+    </h2>
+    <!-- Descripción -->
+    <p class="mx-auto mt-5 max-w-2xl text-[15px] leading-8 text-slate-600">
+      El contenido presentado en esta guía se fundamenta en la documentación
+      institucional y en las referencias oficiales de cada tecnología, con el
+      propósito de mantener un estándar técnico claro, consistente y alineado
+      con las mejores prácticas de desarrollo.
+    </p>
+    <!-- Links -->
+    <div
+      class="mx-auto mt-10 flex max-w-2xl flex-wrap justify-center gap-x-8 gap-y-4"
+    >
+      {
+        references.map((reference) => (
+          <DocumentationReference
+            href={reference.href}
+            title={reference.title}
+          />
+        ))
+      }
+    </div>
+
+    <!-- Separador -->
+    <div class="mx-auto mt-8 h-px w-20 bg-slate-200"></div>
+
+    <!-- Información inferior -->
+    <div class="mt-6 flex justify-center">
+      <a
+        href="#top"
+        class="group relative inline-flex py-1 text-xs font-medium uppercase tracking-[0.2em] text-slate-400 transition-colors duration-300 hover:text-emerald-800"
+      >
+        <span>
+          Última actualización · {
+            new Date().toLocaleDateString("es-ES", {
+              month: "short",
+              year: "numeric",
+            })
+          }
+        </span>
+
+        <!-- Línea inferior -->
+        <span
+          class="absolute -bottom-0.5 left-0 h-px w-full origin-center scale-x-0 bg-linear-to-r from-transparent via-emerald-700 to-transparent transition-transform duration-300 ease-out group-hover:scale-x-100"
+        ></span>
+      </a>
+    </div>
+  </div>
+</footer>

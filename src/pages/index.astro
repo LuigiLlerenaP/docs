@@ -1,55 +1,41 @@
 ---
-import DocumentationCard from "../components/landing/DocumentationCard.astro";
+import FooterLanding from "../components/landing/FooterLanding.astro";
 import Presentacion from "../components/landing/Presentacion.astro";
 import SectionHeader from "../components/landing/SectionHeader.astro";
 import LandingLayout from "../layouts/LandingLayout.astro";
-
-// 1. Centralizamos los datos en un arreglo
-const tarjetas = [
-  {
-    title: "SQL Server",
-    href: "/sql",
-    description:
-      "Convenciones, procedimientos almacenados, índices, transacciones y estándares para el desarrollo de bases de datos.",
-  },
-
-  // {
-  //   title: "Procesos ETL",
-  //   href: "/etl",
-  //   description: "Guías de flujos de integración, manejo de errores y lookups.",
-  // },
-  // {
-  //   title: "Procesos ETL",
-  //   href: "/etl",
-  //   description: "Guías de flujos de integración, manejo de errores y lookups.",
-  // },
-];
 ---
 
 <LandingLayout title="Portal de Documentación">
-  <section class="mx-auto w-full max-w-7xl px-8">
-    <Presentacion />
+  <section class="w-full">
+    <!-- Hero -->
+    <div class="mx-auto w-full max-w-4xl px-6 sm:px-8 lg:px-10">
+      <Presentacion />
+      <SectionHeader
+        title="Biblioteca de documentación"
+        description="Explora las distintas áreas de conocimiento y accede a la documentación técnica de cada proyecto, tecnología o proceso."
+      />
+      <div class="mt-10 flex justify-center">
+        <a
+          href="/documentation"
+          class="group inline-flex items-center gap-3 rounded-xl border border-emerald-800 bg-emerald-800 px-6 py-3 text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:bg-emerald-900 hover:shadow-lg hover:shadow-emerald-900/10 focus:outline-none focus:ring-2 focus:ring-emerald-800 focus:ring-offset-2"
+        >
+          Explorar documentación
 
-    <SectionHeader
-      title="Biblioteca de documentación"
-      description="Explora las distintas áreas de conocimiento y accede a la documentación técnica de cada proyecto, tecnología o proceso."
-    />
-
-    <div
-      class:list={[
-        "mt-8 grid grid-cols-1 gap-4",
-        tarjetas.length > 2 ? "sm:grid-cols-2" : "",
-      ]}
-    >
-      {
-        tarjetas.map((tarjeta) => (
-          <DocumentationCard
-            title={tarjeta.title}
-            href={tarjeta.href}
-            description={tarjeta.description}
-          />
-        ))
-      }
+          <svg
+            class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
     </div>
+    <FooterLanding />
   </section>
 </LandingLayout>

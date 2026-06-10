@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title} · Portal de Documentación</title>
+  </head>
+
+  <body
+    class="min-h-screen bg-white font-sans text-slate-700 antialiased selection:bg-emerald-700 selection:text-white"
+  >
+    <main id="top" class="relative isolate min-h-screen overflow-x-hidden">
+      <!-- Grid de fondo -->
+      <div
+        class="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-size-[4rem_4rem] opacity-70"
+      >
+      </div>
+
+      <!-- Degradado superior -->
+      <div
+        class="absolute inset-x-0 top-0 -z-10 h-96 bg-linear-to-b from-emerald-50/40 via-white to-transparent"
+      >
+      </div>
+
+      <!-- Contenido -->
+      <div class="mx-auto w-full max-w-6xl px-6 py-16 sm:px-8 lg:px-10">
+        <slot />
+      </div>
+    </main>
+  </body>
+</html>

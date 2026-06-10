@@ -11,14 +11,14 @@ const alignment =
   align === "left" ? "text-left items-start" : "text-center items-center";
 ---
 
-<div class={`mb-12 flex flex-col ${alignment}`}>
+<div class={`mx-auto mb-10 flex w-full max-w-4xl flex-col ${alignment}`}>
   <h2 class="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
     {title}
   </h2>
 
   {
     description && (
-      <p class="mt-2 max-w-2xl text-lg leading-8 tracking-[0.01em] text-slate-600">
+      <p class="mt-3 max-w-3xl text-lg leading-8 tracking-[0.01em] text-slate-600">
         {description}
       </p>
     )
