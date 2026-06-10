@@ -1,0 +1,17 @@
+---
+interface Props {
+  categoria: string;
+  version: string;
+}
+
+const { categoria, version } = Astro.props;
+---
+
+<div class="flex justify-end items-center gap-3 mb-4">
+  <span
+    class="px-2 py-1 bg-emerald-50 text-emerald-900 text-[10px] font-mono tracking-widest uppercase border border-emerald-900/20"
+  >
+    {categoria}
+  </span>
+  <span class="text-slate-400 text-xs font-mono">{version}</span>
+</div>

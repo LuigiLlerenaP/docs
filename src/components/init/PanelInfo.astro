@@ -1,0 +1,40 @@
+---
+interface Props {
+  titulo: string;
+  tema?: "emerald" | "slate" | "blue" | "red"; // Puedes agregar más colores aquí
+}
+
+const { titulo, tema = "emerald" } = Astro.props;
+
+// Diccionario de clases completas para que Tailwind las detecte
+const estilos = {
+  emerald: {
+    borde: "border-emerald-800",
+    textoTitulo: "text-emerald-900",
+  },
+  slate: {
+    borde: "border-slate-300",
+    textoTitulo: "text-slate-800",
+  },
+  blue: {
+    borde: "border-blue-600",
+    textoTitulo: "text-blue-800",
+  },
+  red: {
+    borde: "border-red-600",
+    textoTitulo: "text-red-800",
+  },
+};
+
+const clasesSeleccionadas = estilos[tema];
+---
+
+<div class={`p-4 border-l-2 bg-white ${clasesSeleccionadas.borde}`}>
+  <span class={`font-semibold ${clasesSeleccionadas.textoTitulo}`}>
+    {titulo}
+  </span>
+
+  <div class="mt-2 text-xs text-slate-600 leading-relaxed">
+    <slot />
+  </div>
+</div>

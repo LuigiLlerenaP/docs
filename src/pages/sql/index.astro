@@ -1,12 +1,88 @@
 ---
-import DocLayout from "../../layouts/DocLayout.astro.astro";
+import CardTema from "../../components/init/CardTema.astro";
+import PanelInfo from "../../components/init/PanelInfo.astro";
+import TagHeader from "../../components/init/TagHeader.astro";
+import DocLayout from "../../layouts/DocLayout.astro";
+
+const seccionesSQL = [
+  {
+    titulo: "Consultas",
+    descripcion:
+      "Mejores prácticas para redacción de SELECTs, uso eficiente de JOINs, CTEs, subconsultas y filtrado de datos.",
+    etiqueta: "DML",
+  },
+  {
+    titulo: "Procedimientos Almacenados", // Cambiado de "Sps" para que se vea más formal
+    descripcion:
+      "Estructura base, uso de variables, manejo de transacciones (COMMIT/ROLLBACK) y control de errores con TRY/CATCH.",
+    etiqueta: "T-SQL",
+  },
+  {
+    titulo: "Estilo de Código",
+    descripcion:
+      "Estándares de nomenclatura, reglas de indentación, uso de mayúsculas para palabras reservadas y pautas para comentarios.",
+    etiqueta: "CONVENCIONES",
+  },
+  {
+    titulo: "Rendimiento",
+    descripcion:
+      "Estrategias de indexación, análisis de planes de ejecución, sargability y optimización de bloqueos.",
+    etiqueta: "PERFORMANCE",
+  },
+  {
+    titulo: "Seguridad",
+    descripcion:
+      "Prevención de inyección SQL (SQLi), gestión de permisos mínimos, roles y encriptación de datos sensibles.",
+    etiqueta: "SEGURIDAD",
+  },
+  {
+    titulo: "Consejos",
+    descripcion:
+      "Antipatrones a evitar (como el uso abusivo de cursores), recomendaciones del equipo y tips útiles para el día a día.",
+    etiqueta: "TIPS",
+  },
+];
 ---
 
-<DocLayout title="Introducción">
-  <h1 class="text-2xl font-semibold text-slate-900 mb-6">Introducción</h1>
+<DocLayout title="Estándares - SQL Server">
+  <div class="max-w-4xl bg-white text-slate-800 font-sans">
+    <header class="mb-10 border-b border-emerald-900/10 pb-6">
+      <TagHeader categoria="Base de Datos" version="v1.0.0" />
+      <h1 class="text-3xl font-semibold text-slate-900 mb-3">
+        Guía de estándares: SQL Server
+      </h1>
+      <p class="text-sm text-slate-600 max-w-2xl leading-relaxed">
+        Documentación centralizada para el equipo de desarrollo. Referencia
+        estricta sobre cómo escribimos, estructuramos y mantenemos nuestro
+        código en la base de datos.
+      </p>
+    </header>
 
-  <p class="text-slate-600 leading-relaxed">
-    Bienvenido a la documentación SQL. Aquí encontrarás las bases, buenas
-    prácticas y estándares para trabajar con consultas.
-  </p>
+    <!-- Grid de Temáticas (Plano, sin sombras, bordes definidos) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+      {
+        seccionesSQL.map((seccion) => (
+          <CardTema
+            titulo={seccion.titulo}
+            etiqueta={seccion.etiqueta}
+            descripcion={seccion.descripcion}
+          />
+        ))
+      }
+    </div>
+
+    <div class="space-y-4 font-mono text-sm">
+      <PanelInfo titulo="Cómo usar esta guía" tema="blue">
+        Navega por las secciones del menú lateral según el tema que necesites.
+        Cada sección incluye código de ejemplo, patrones recomendados y
+        antipatrones a evitar en el motor de base de datos.
+      </PanelInfo>
+      <PanelInfo titulo="Dudas y correcciones " tema="emerald">
+        Para realizar preguntas, sugerir mejoras o reportar una corrección, es
+        indispensable comunicarse con <span class="text-emerald-900 font-bold"
+          >@llerenal</span
+        >.
+      </PanelInfo>
+    </div>
+  </div>
 </DocLayout>

@@ -8,26 +8,38 @@ interface Props {
 
 const { menuSections = [], currentPath = "" } = Astro.props as Props;
 
-const activeHref =
-  menuSections
-    .flatMap(section => section.links)
-    .filter(link =>
-      currentPath === link.href ||
-      currentPath.startsWith(link.href + "/")
-    )
-    .sort((a, b) => b.href.length - a.href.length)[0]?.href;
+const activeHref = menuSections
+  .flatMap((section) => section.links)
+  .filter(
+    (link) =>
+      currentPath === link.href || currentPath.startsWith(link.href + "/"),
+  )
+  .sort((a, b) => b.href.length - a.href.length)[0]?.href;
 ---
 
-<nav class="relative flex-1 overflow-y-auto px-3 sm:px-4 pb-14 custom-scrollbar">
+<nav
+  aria-label="Navegación lateral"
+  class="relative flex-1 overflow-y-auto px-3 sm:px-4 pb-14 custom-scrollbar"
+>
   <!-- fade top -->
-  <div class="pointer-events-none absolute inset-x-0 top-0 h-7 bg-gradient-to-b from-white/95 to-transparent z-10"></div>
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 h-7 bg-linear-to-b from-white/95 to-transparent z-10"
+  >
+  </div>
 
   {
     menuSections.map((section) => (
-      <section class="mb-8 mt-5">
-        <h4 class="mb-3 px-3 text-[11px] font-medium tracking-[0.14em] text-slate-500">
+      <div
+        role="group"
+        aria-labelledby={`group-${section.category}`}
+        class="mb-8 mt-5"
+      >
+        <p
+          id={`group-${section.category}`}
+          class="mb-3 px-3 text-[11px] font-medium tracking-[0.14em] uppercase text-slate-500"
+        >
           {section.category}
-        </h4>
+        </p>
 
         <ul class="space-y-1.5">
           {section.links.map((link) => {
@@ -42,30 +54,31 @@ const activeHref =
                     "group relative flex items-center rounded-lg px-3 py-2 text-[14px] leading-5",
                     "transition-all duration-200 ease-out will-change-transform",
                     isActive
-                      ? "text-slate-900 font-medium bg-slate-100" 
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 hover:-translate-y-[1px]",
+                      ? "text-slate-900 font-medium bg-slate-100"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 hover:-translate-y-px",
                   ]}
                 >
-                  <!-- indicador -->
                   <span
                     class:list={[
-                      "absolute left-1.5 top-1/2 -translate-y-1/2 h-4 w-[2px] rounded-full transition-all duration-200",
+                      "absolute left-1.5 top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full transition-all duration-200",
                       isActive
                         ? "bg-emerald-600 opacity-100"
                         : "opacity-0 group-hover:opacity-40 group-hover:bg-slate-300",
                     ]}
                   />
-
                   <span class="truncate">{link.label}</span>
                 </a>
               </li>
             );
           })}
         </ul>
-      </section>
+      </div>
     ))
   }
 
   <!-- fade bottom -->
-  <div class="pointer-events-none sticky bottom-0 h-10 bg-gradient-to-t from-white/95 to-transparent"></div>
+  <div
+    class="pointer-events-none sticky bottom-0 h-10 bg-linear-to-t from-white/95 to-transparent"
+  >
+  </div>
 </nav>

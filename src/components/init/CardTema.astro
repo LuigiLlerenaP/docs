@@ -1,0 +1,56 @@
+---
+interface Props {
+  etiqueta: string;
+  titulo: string;
+  descripcion: string;
+  tema?: "emerald" | "slate" | "blue" | "indigo";
+}
+
+const { etiqueta, titulo, descripcion, tema = "emerald" } = Astro.props;
+
+// Diccionario de colores para evitar que Tailwind purgue las clases
+const estilos = {
+  emerald: {
+    borderHover: "hover:border-emerald-900",
+    textoHover: "group-hover:text-emerald-900",
+    etiquetaHover: "group-hover:text-emerald-700",
+  },
+  slate: {
+    borderHover: "hover:border-slate-800",
+    textoHover: "group-hover:text-slate-800",
+    etiquetaHover: "group-hover:text-slate-600",
+  },
+  blue: {
+    borderHover: "hover:border-blue-800",
+    textoHover: "group-hover:text-blue-800",
+    etiquetaHover: "group-hover:text-blue-600",
+  },
+  indigo: {
+    borderHover: "hover:border-indigo-800",
+    textoHover: "group-hover:text-indigo-800",
+    etiquetaHover: "group-hover:text-indigo-600",
+  },
+};
+
+const clases = estilos[tema];
+---
+
+<div
+  class={`relative group p-5 bg-white border border-slate-200 transition-all duration-300 ${clases.borderHover}`}
+>
+  <span
+    class={`absolute top-4 right-4 inline-block font-mono text-[10px] uppercase tracking-widest text-slate-400 transition-colors duration-300 ${clases.etiquetaHover}`}
+  >
+    {etiqueta}
+  </span>
+
+  <h3
+    class={`text-sm font-semibold text-slate-900 transition-colors mb-2 pr-12 ${clases.textoHover}`}
+  >
+    {titulo}
+  </h3>
+
+  <p class="text-xs text-slate-600 leading-relaxed mt-2">
+    {descripcion}
+  </p>
+</div>
