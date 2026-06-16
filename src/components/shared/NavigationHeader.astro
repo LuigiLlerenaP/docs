@@ -1,0 +1,33 @@
+---
+interface Props {
+  href: string;
+  label: string;
+}
+const { href = "/", label = "" } = Astro.props;
+---
+
+<div class="mx-auto flex w-full items-center justify-betwee pb-4">
+  <a
+    href={href}
+    class="group inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-all duration-200 hover:text-emerald-700"
+  >
+    <svg
+      class="h-4 w-4 text-emerald-600 transition-transform duration-200 group-hover:-translate-x-0.5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"
+      ></path>
+    </svg>
+
+    <span>{label}</span>
+  </a>
+
+  <div
+    class="ml-auto text-right text-xs font-medium tracking-[0.18em] text-slate-400"
+  >
+    <slot />
+  </div>
+</div>
