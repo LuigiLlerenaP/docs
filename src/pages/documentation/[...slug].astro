@@ -1,0 +1,35 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import DocPageLayout from "../../layouts/DocPageLayout.astro";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("docs");
+
+  const publishedDocs = import.meta.env.PROD
+    ? docs.filter((doc: CollectionEntry<"docs">) => !doc.data.draft)
+    : docs;
+
+  return publishedDocs.map((doc: CollectionEntry<"docs">) => ({
+    params: {
+      slug: doc.id.replace(/\/index$/, ""),
+    },
+    props: { doc },
+  }));
+}
+
+interface Props {
+  doc: CollectionEntry<"docs">;
+}
+
+const { doc } = Astro.props;
+const { Content } = await render(doc);
+---
+
+<DocPageLayout
+  title={doc.data.title}
+  description={doc.data.description}
+  updated={doc.data.updated}
+  category={doc.data.category}
+>
+  <Content />
+</DocPageLayout>

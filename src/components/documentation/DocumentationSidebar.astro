@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+// Definimos estrictamente las propiedades que recibe el componente
+interface Props {
+  grouped: Record<string, CollectionEntry<"docs">[]>;
+  categoryLabels?: Record<string, string>;
+  currentId: string;
+}
+
+const { grouped, categoryLabels = {}, currentId } = Astro.props;
+---
+
+<aside
+  class="hidden lg:block w-72 shrink-0 border-r border-emerald-950/10 bg-white pt-16 pb-12 h-[calc(100vh-0.25rem)] sticky top-0 overflow-y-auto"
+>
+  <nav class="flex flex-col gap-8 px-6">
+    {
+      Object.entries(grouped).map(([category, docs]) => (
+        <div class="flex flex-col gap-3">
+          <h3 class="text-[11px] font-semibold uppercase tracking-widest text-slate-400 px-3">
+            {categoryLabels[category] || category}
+          </h3>
+
+          <ul class="flex flex-col gap-1">
+            {docs.map((doc) => {
+              const isActive = doc.id === currentId;
+              const href = `/documentation/${doc.id.replace(/\/index$/, "")}`;
+
+              return (
+                <li>
+                  <a
+                    href={href}
+                    class:list={[
+                      // BASE: transition-all hace que cualquier cambio sea muy fluido
+                      "flex items-center px-3 py-2 text-sm transition-all duration-200 rounded-md",
+                      isActive
+                        ? // ACTIVO: Fondo gris ultra-claro (slate-50) para enmarcarlo, texto verde oscuro
+                          "font-medium text-emerald-900 bg-slate-50"
+                        : // NORMAL / HOVER: Al pasar el mouse toma un fondo gris un poco más marcado (slate-100)
+                          "font-normal text-slate-500 hover:text-emerald-900 hover:bg-slate-100",
+                    ]}
+                  >
+                    {doc.data.title}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
+</aside>

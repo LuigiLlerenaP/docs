@@ -1,0 +1,99 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import "../styles/global.css";
+import DocumentationHeader from "../components/documentation/DocumentationHeader.astro";
+import DocumentationSidebar from "../components/documentation/DocumentationSidebar.astro";
+import DocumentationTopBar from "../components/documentation/DocumentationTopBar.astro";
+import TableOfContents from "../components/documentation/TableOfContents.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  updated?: string;
+  category?: string;
+  currentId?: string;
+}
+
+const { title, description, updated, category, currentId } = Astro.props;
+
+const allDocs = await getCollection("docs");
+
+// Agrupar por carpeta (categoría)
+const grouped = allDocs.reduce(
+  (acc: Record<string, CollectionEntry<"docs">[]>, doc) => {
+    const parts = doc.id.split("/");
+    const folder = parts.length > 1 ? parts[0] : "general";
+    if (!acc[folder]) acc[folder] = [];
+    acc[folder].push(doc);
+    return acc;
+  },
+  {},
+);
+
+// Ordenar cada grupo por order
+Object.values(grouped).forEach((group) =>
+  group.sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)),
+);
+
+const categoryLabels: Record<string, string> = {
+  db: "Base de datos",
+  etl: "Integración ETL",
+  backend: "Backend",
+  frontend: "Frontend",
+  devops: "DevOps",
+};
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} · Portal de Documentación</title>
+  </head>
+  <body
+    class="min-h-screen flex flex-col bg-white font-sans text-slate-600 antialiased selection:bg-emerald-800 selection:text-white"
+  >
+    <div
+      class="h-1 w-full shrink-0 bg-linear-to-r from-emerald-900 via-emerald-800 to-emerald-900"
+    >
+    </div>
+
+    <div class="mx-auto flex flex-1 w-full max-w-400 bg-white">
+      <DocumentationSidebar
+        grouped={grouped}
+        categoryLabels={categoryLabels}
+        currentId={currentId ?? ""}
+      />
+
+      <main class="min-w-0 flex-1 px-8 py-16 lg:px-14 xl:px-16">
+        <div class="mx-auto flex max-w-7xl gap-16">
+          <div class="min-w-0 flex-1 max-w-4xl flex-col">
+            <DocumentationTopBar updated={updated} />
+
+            <DocumentationHeader
+              title={title}
+              description={description}
+              category={category}
+            />
+
+            <article
+              class="prose prose-slate mt-12 max-w-none
+              prose-headings:font-semibold prose-headings:text-slate-900
+              prose-a:text-emerald-800 prose-a:decoration-emerald-800/30 hover:prose-a:decoration-emerald-800
+              prose-code:text-emerald-900 prose-code:bg-emerald-50/50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
+              prose-strong:text-slate-900"
+            >
+              <slot />
+            </article>
+          </div>
+
+          <div class="hidden xl:block xl:w-64 xl:shrink-0">
+            <TableOfContents headings={[]} />
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

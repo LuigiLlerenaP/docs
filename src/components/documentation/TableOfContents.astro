@@ -1,0 +1,42 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+---
+
+<aside class="sticky top-10 hidden w-64 shrink-0 self-start xl:block">
+  <div class="pl-6">
+    <p
+      class="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400"
+    >
+      En esta página
+    </p>
+
+    <nav>
+      <ul class="space-y-2">
+        {
+          headings
+            .filter((heading) => heading.depth === 2)
+            .map((heading) => (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  class="block text-sm text-slate-500 transition-colors duration-200 hover:text-emerald-800"
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+    </nav>
+  </div>
+</aside>

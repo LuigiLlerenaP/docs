@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  category?: string;
+}
+
+const { title, description, category } = Astro.props;
+---
+
+<header class="mb-14">
+  {
+    category && (
+      <p class="text-[11px] font-semibold uppercase tracking-[0.30em] text-emerald-700">
+        {category}
+      </p>
+    )
+  }
+
+  <h1 class="mt-4 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+    {title}
+  </h1>
+
+  {
+    description && (
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+        {description}
+      </p>
+    )
+  }
+
+  <div class="mt-8 h-px w-20 bg-emerald-700/20"></div>
+</header>
